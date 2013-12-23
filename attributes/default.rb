@@ -21,6 +21,7 @@ default['build_essential']['compiletime'] = false
 
 case node['platform_family']
 when "mac_os_x"
+
   case
   when Chef::VersionConstraint.new("~> 10.7.0").include?(node['platform_version']),
        Chef::VersionConstraint.new("~> 10.8.0").include?(node['platform_version']),
@@ -31,4 +32,16 @@ when "mac_os_x"
     default['build_essential']['osx']['gcc_installer_url'] = "https://github.com/downloads/kennethreitz/osx-gcc-installer/GCC-10.6.pkg"
     default['build_essential']['osx']['gcc_installer_checksum'] = "d1db5bab6a3f6b9f3b5577a130baeefa"
   end
+
+  default['build_essential']['osx']['gcc_installer_pkg'] = "com.apple.pkg.gcc4.2Leo"
+
+  case
+  when Chef::VersionConstraint.new("~> 10.9.0").include?(node['platform_version'])
+    default['build_essential']['osx']['developer_tools_pkg'] = "com.apple.pkg.CLTools_Executables"
+  when Chef::VersionConstraint.new("~> 10.6.0").include?(node['platform_version']),
+    Chef::VersionConstraint.new("~> 10.7.0").include?(node['platform_version']),
+    Chef::VersionConstraint.new("~> 10.8.0").include?(node['platform_version'])
+    default['build_essential']['osx']['developer_tools_pkg'] = "com.apple.pkg.DeveloperToolsCLI"
+  end
+
 end

@@ -19,8 +19,8 @@
 
 
 result = Mixlib::ShellOut.new("pkgutil --pkgs").run_command
-osx_gcc_installer_installed = result.stdout.split("\n").include?("com.apple.pkg.gcc4.2Leo")
-developer_tools_cli_installed = result.stdout.split("\n").include?("com.apple.pkg.DeveloperToolsCLI")
+osx_gcc_installer_installed = result.stdout.split("\n").include?(node['build_essential']['osx']['gcc_installer_pkg'])
+developer_tools_cli_installed = result.stdout.split("\n").include?(node['build_essential']['osx']['developer_tools_pkg'])
 pkg_filename = ::File.basename(node['build_essential']['osx']['gcc_installer_url'])
 pkg_path = "#{Chef::Config[:file_cache_path]}/#{pkg_filename}"
 
